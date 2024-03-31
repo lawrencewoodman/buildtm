@@ -1,0 +1,8 @@
+# Test config file to build a module
+# This file is missing the name key
+# Used by buildtm.tcl
+
+
+version 0.1
+description {A module}
+files {lib/*.tcl}

@@ -1,0 +1,8 @@
+# Test config file to build a module
+# This file is missing a value for version
+# Used by buildtm.tcl
+
+name mymodule
+version
+description {A module}
+files {lib/*.tcl}
