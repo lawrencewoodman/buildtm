@@ -1,3 +1,5 @@
+#!/usr/bin/env tclsh
+#
 # Build TCL modules from multiple files
 #
 # Copyright (C) 2024 Lawrence Woodman <https://lawrencewoodman.github.io/>
