@@ -1,0 +1,14 @@
+# Test config file to build a module
+# This file is missing the decription key
+# Used by buildtm.tcl
+
+name mymodule
+version 0.1
+description {My  wonderful
+
+module
+
+yes
+
+}
+files {lib/*.tcl}

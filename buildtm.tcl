@@ -13,7 +13,6 @@ proc appendFileToModule {fdModule filename} {
   close $fd
 }
 
-# TODO: Add error detection
 
 proc buildModule {configDir config} {
   set name [dict get $config name]
@@ -23,13 +22,15 @@ proc buildModule {configDir config} {
   
   puts "Building: $moduleFilename"
   set fdModule [open $moduleFilename w]
+
   puts $fdModule "# $name v$version"
   if {[dict exists $config description]} {
-    puts $fdModule "# [dict get $config description]"
+    set description [dict get $config description]
+    set description [string trim [regsub -all {\s+} $description { }]]
+    puts $fdModule "# $description"
   }
-  puts $fdModule "#"
-  # TODO: Add more to header, what it was built with and when
-  
+  puts $fdModule ""
+
   foreach file $files {
     set incFiles [
       list {*}[lsort [glob -directory $configDir $file]] \

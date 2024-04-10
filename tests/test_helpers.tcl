@@ -18,8 +18,9 @@ proc TestHelpers::buildtm {{configFilename {}}} {
     append stdout "$line\n"
   }
   catch {close $pipe} stderr
+  set tmContents [ReadTMFile $tmpDir]
   
-  return [list $stdout $stderr]
+  return [list $stdout $stderr $tmContents]
 }
 
 
@@ -36,4 +37,17 @@ proc TestHelpers::BuildTmpDir {} {
   file copy [file join $RepoRootDir tests fixtures missing_description.build] [file join $tmpDir]
   file copy [file join $RepoRootDir tests fixtures missing_name.build] [file join $tmpDir]
   return $tmpDir
+}
+
+
+proc TestHelpers::ReadTMFile {dir} {
+  set contents {}
+  set tmFiles [glob -nocomplain -directory $dir *.tm]
+  if {[llength $tmFiles] == 1} {
+    lassign $tmFiles filename
+    set fd [open $filename r]
+    set contents [read $fd]
+    close $fd
+  }
+  return $contents
 }

@@ -25,10 +25,13 @@ pairs.  The config file also supports comments for lines beginning with `#`.
 
 The file uses the following fields:
 
-    name - The name of the module
-    version - The version number of the module
-    description - A brief one line description of the module to put in the header comments.  This is optional.
-    files - A list of files to form the module.  Each entry supports wildcards which are compatible with the Tcl command 'glob'.
+    name        - The name of the module
+    version     - The version number of the module
+    description - A brief description of the module to put in the
+                  header comments.  Newlines and multiple spaces are
+                  stripped.  This field is optional.
+    files       - A list of files to form the module.  Each entry supports
+                  wildcards which are compatible with the Tcl command 'glob'.
 
 As an example, the following would build the module 'mymodule-0.1.tm':
 
