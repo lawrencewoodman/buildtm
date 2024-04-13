@@ -29,8 +29,9 @@ proc buildModule {configDir config} {
     set description [string trim [regsub -all {\s+} $description { }]]
     puts $fdModule "# $description"
   }
-  puts $fdModule "# Created using buildtm."
-  puts $fdModule "# Changes should be made to source files not this file."
+  puts $fdModule "#"
+  puts $fdModule "# Created using buildtm"
+  puts $fdModule "# Changes should be made to source files not this file"
   puts $fdModule ""
 
   foreach file $files {

@@ -49,20 +49,6 @@ test buildtm-7 {Check allows config to omit the description entry} \
 -body {
   lassign [TestHelpers::buildtm [file join $ThisScriptDir fixtures missing_description.build]] stdout stderr tmContents
   set stdout [regsub -all -- {Adding file: .*?(file.\.tcl)} $stdout {Adding filer: \1}]
-  set tmContents [lrange [split $tmContents "\n"] 0 4]
-  list $stdout $stderr $tmContents
-} -result [list [join [list "Building: mymodule-0.1.tm" \
-  "  Adding filer: filea.tcl" \
-  "  Adding filer: fileb.tcl" \
-  "  Adding filer: filec.tcl" \
-  "Build successful" ""] "\n"] {} \
-  {{# mymodule v0.1} {# Created using buildtm.} {# Changes should be made to source files not this file.} {} {# I am file A}}]
-
-
-test buildtm-8 {Check description newlines and extra spaces stripped} \
--body {
-  lassign [TestHelpers::buildtm [file join $ThisScriptDir fixtures complete.build]] stdout stderr tmContents
-  set stdout [regsub -all -- {Adding file: .*?(file.\.tcl)} $stdout {Adding filer: \1}]
   set tmContents [lrange [split $tmContents "\n"] 0 5]
   list $stdout $stderr $tmContents
 } -result [list [join [list "Building: mymodule-0.1.tm" \
@@ -70,7 +56,21 @@ test buildtm-8 {Check description newlines and extra spaces stripped} \
   "  Adding filer: fileb.tcl" \
   "  Adding filer: filec.tcl" \
   "Build successful" ""] "\n"] {} \
-  {{# mymodule v0.1} {# My wonderful module yes} {# Created using buildtm.} {# Changes should be made to source files not this file.} {} {# I am file A}}]
+  {{# mymodule v0.1} # {# Created using buildtm} {# Changes should be made to source files not this file} {} {# I am file A}}]
+
+
+test buildtm-8 {Check description newlines and extra spaces stripped} \
+-body {
+  lassign [TestHelpers::buildtm [file join $ThisScriptDir fixtures complete.build]] stdout stderr tmContents
+  set stdout [regsub -all -- {Adding file: .*?(file.\.tcl)} $stdout {Adding filer: \1}]
+  set tmContents [lrange [split $tmContents "\n"] 0 6]
+  list $stdout $stderr $tmContents
+} -result [list [join [list "Building: mymodule-0.1.tm" \
+  "  Adding filer: filea.tcl" \
+  "  Adding filer: fileb.tcl" \
+  "  Adding filer: filec.tcl" \
+  "Build successful" ""] "\n"] {} \
+  {{# mymodule v0.1} {# My wonderful module yes} # {# Created using buildtm} {# Changes should be made to source files not this file} {} {# I am file A}}]
 
 
 cleanupTests
