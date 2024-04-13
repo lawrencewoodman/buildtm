@@ -19,7 +19,7 @@ proc buildModule {configDir config} {
   set version [dict get $config version]
   set files [dict get $config files]
   set moduleFilename "$name-$version.tm"
-  
+
   puts "Building: $moduleFilename"
   set fdModule [open $moduleFilename w]
 
@@ -29,6 +29,8 @@ proc buildModule {configDir config} {
     set description [string trim [regsub -all {\s+} $description { }]]
     puts $fdModule "# $description"
   }
+  puts $fdModule "# Created using buildtm."
+  puts $fdModule "# Changes should be made to source files not this file."
   puts $fdModule ""
 
   foreach file $files {
@@ -50,7 +52,7 @@ proc verifyConfig {config} {
   if {[catch {dict keys $config} err]} {
     return -code error "config: $err"
   }
-  
+
   set mandatoryEntries {name version files}
   set optionalEntries {description}
   set allEntries [concat $mandatoryEntries $optionalEntries]
@@ -74,7 +76,7 @@ proc loadBuildConfig {filename} {
   foreach line [split $configContents "\n"] {
     if {![regexp -- {\s*#.*$} $line]} {
       lappend cleanLines $line
-    }  
+    }
   }
   close $fd
   set  config [join $cleanLines "\n"]
@@ -101,7 +103,7 @@ proc main {args} {
       exit 1
     }
   }
-  
+
   set isErr [catch {
     set buildConfigDir [file dirname $buildFilename]
     set buildConfig [loadBuildConfig $buildFilename]
